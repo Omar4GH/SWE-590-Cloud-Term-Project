@@ -1,6 +1,7 @@
 import  express  from "express";
 import cors from "cors";
 import messagesRoute from "./routes/message.js";
+import searchRoute from "./routes/search.js";
 import mongoose from "mongoose";
 import { db } from "./db.js";
 
@@ -23,6 +24,8 @@ app.use(cors({
   }));
 
 
+
+  app.use("/api/search", searchRoute)
 
 app.use("/api/message", messagesRoute)
 
