@@ -13,6 +13,9 @@ function App() {
   const [number, setNumber] = useState("");
   const [result, setResult] = useState(null);
 
+  const [numberLambda, setNumberLambda] = useState("");
+  const [resultLambda, setResultLambda] = useState(null);
+
   const fetchData = async () => {
     try {
       const res = await _axios.get(`message/`);
@@ -67,15 +70,26 @@ function App() {
       console.error("Error performing heavy computation:", error);
     }
   };
+////////////////////////////////////
+const handleHeavyComputationLambda = async () => {
+  try {
+    const response = await axios.post("https://63r97e48d8.execute-api.eu-central-1.amazonaws.com/default/factorizationFunction", {
+      numberLambda: parseInt(numberLambda, 10),
+    });
 
+    setResultLambda(response.data.factors);
+  } catch (error) {
+    console.error("Error performing heavy computation:", error);
+  }
+};
   return (
-    <div className=" bg-blue-500 h-screen ">
+    <div className=" bg-blue-500 h-full ">
       <h1 className="text-2xl font-bold  text-center">
         SWE 590 Cloud Term Project <br /> Omar Ghamrawi - 2022719072
       </h1>
       <div className="flex items-center mt-10 w-4/5 mx-auto">
         <div
-          className="w-2/4 p-4 bg-slate-100 rounded-lg my-6 shadow-md"
+          className="w-2/4 p-4 bg-slate-300 rounded-lg my-6 shadow-md"
           style={{ overflowY: "auto" }}
         >
           <h1 className="text-2xl font-bold mb-4">Messaging</h1>
@@ -112,7 +126,7 @@ function App() {
           </div>
         </div>
 
-        <div className="w-1/2 p-4 bg-slate-100  rounded-lg shadow-md ml-4 justify-center">
+        <div className="w-1/2 p-4 bg-slate-300  rounded-lg shadow-md ml-4 justify-center">
           <h1 className="text-2xl font-bold mb-4">Find a Photo</h1>
 
           <div className="overflow-y-auto bg-white p-4 h-72 max-h-72">
@@ -136,8 +150,9 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="mt-5 mb-5 flex  items-center justify-center">
-        <div className="bg-white p-8 w-10/12 rounded-md shadow-md">
+      <div className="mt-5 mb-5  flex items-center justify-center">
+        <div className="bg-slate-300 p-8 w-10/12 rounded-md shadow-md">
+          Calculated on Server
           <label className="block mb-4 text-lg font-bold">
             Enter a Number:
           </label>
@@ -146,18 +161,46 @@ function App() {
             value={number}
             onChange={(e) => setNumber(e.target.value)}
             className="border border-gray-300 p-2 rounded-md focus:outline-none w-full"
-          />
+          />{" "}
+          <label className="block mb-4 text-lg font-bold">Result:</label>
+          {result && (
+            <div className="mt-4 border border-gray-300 rounded-lg border-solid h-fit bg-white">
+              <p className="text-gray-700">Factors: {result.join(", ")}</p>
+            </div>
+          )}
           <button
             onClick={handleHeavyComputation}
             className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none"
           >
             Perform Heavy Computation
           </button>
-          {result && (
-            <div className="mt-4">
-              <p className="text-gray-700">Factors: {result.join(", ")}</p>
+        </div>
+      </div>
+
+      <div className="mt-5 mb-5  flex items-center justify-center">
+        <div className="bg-slate-300 p-8 w-10/12 rounded-md shadow-md">
+          Calculated on Lambda
+          <label className="block mb-4 text-lg font-bold">
+            Enter a Number:
+          </label>
+          <input
+            type="text"
+            value={numberLambda}
+            onChange={(e) => setNumberLambda(e.target.value)}
+            className="border border-gray-300 p-2 rounded-md focus:outline-none w-full"
+          />{" "}
+          <label className="block mb-4 text-lg font-bold">Result:</label>
+          {resultLambda && (
+            <div className="mt-4 border border-gray-300 rounded-lg border-solid h-fit bg-white">
+              <p className="text-gray-700">Factors: {resultLambda.join(", ")}</p>
             </div>
           )}
+          <button
+            onClick={handleHeavyComputationLambda}
+            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none"
+          >
+            Perform Heavy Computation
+          </button>
         </div>
       </div>
     </div>
