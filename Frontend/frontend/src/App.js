@@ -10,6 +10,8 @@ function App() {
   const [image, setImage] = useState(null);
   const [newMessage, setNewMessage] = useState("");
   const [trigger, setTrigger] = useState(false);
+  const [number, setNumber] = useState("");
+  const [result, setResult] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -35,12 +37,14 @@ function App() {
 
   const handleGetImage = async () => {
     try {
-      const response = await _axios.get("/search/", { params: { q: imagePrompt } });
-      
+      const response = await _axios.get("/search/", {
+        params: { q: imagePrompt },
+      });
+
       console.log(response.data);
       setImagePrompt("");
       setTrigger(!trigger);
-      setImage(response.data.images_results[0].thumbnail)
+      setImage(response.data.images_results[0].thumbnail);
     } catch (error) {
       // Handle errors
       console.error("Error in image search:", error);
@@ -51,12 +55,25 @@ function App() {
     fetchData();
   }, [trigger]);
 
+  ////////////////////////////////////////////////
+  const handleHeavyComputation = async () => {
+    try {
+      const response = await _axios.post("/heavy-computation", {
+        number: parseInt(number, 10),
+      });
+
+      setResult(response.data.factors);
+    } catch (error) {
+      console.error("Error performing heavy computation:", error);
+    }
+  };
+
   return (
-    <div className="w-screen  ">
-      <h1 className="text-2xl font-bold m-10 text-center">
+    <div className=" bg-blue-500 h-screen ">
+      <h1 className="text-2xl font-bold  text-center">
         SWE 590 Cloud Term Project <br /> Omar Ghamrawi - 2022719072
       </h1>
-      <div className="flex items-center h-full w-4/5 mx-auto">
+      <div className="flex items-center mt-10 w-4/5 mx-auto">
         <div
           className="w-2/4 p-4 bg-slate-100 rounded-lg my-6 shadow-md"
           style={{ overflowY: "auto" }}
@@ -117,6 +134,30 @@ function App() {
               Send
             </button>
           </div>
+        </div>
+      </div>
+      <div className="mt-5 mb-5 flex  items-center justify-center">
+        <div className="bg-white p-8 w-10/12 rounded-md shadow-md">
+          <label className="block mb-4 text-lg font-bold">
+            Enter a Number:
+          </label>
+          <input
+            type="text"
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
+            className="border border-gray-300 p-2 rounded-md focus:outline-none w-full"
+          />
+          <button
+            onClick={handleHeavyComputation}
+            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none"
+          >
+            Perform Heavy Computation
+          </button>
+          {result && (
+            <div className="mt-4">
+              <p className="text-gray-700">Factors: {result.join(", ")}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
