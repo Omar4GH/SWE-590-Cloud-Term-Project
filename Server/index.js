@@ -8,6 +8,7 @@ import { db } from "./db.js";
 
 const app = express();
 app.use(express.json());
+/*
 async function connect() {
   try {
     await mongoose.connect(db);
@@ -18,7 +19,7 @@ async function connect() {
 }
 
 connect();
-
+*/
 app.use(
   cors({
     origin: "*",

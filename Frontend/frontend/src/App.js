@@ -73,8 +73,8 @@ function App() {
 ////////////////////////////////////
 const handleHeavyComputationLambda = async () => {
   try {
-    const response = await axios.post("https://63r97e48d8.execute-api.eu-central-1.amazonaws.com/default/factorizationFunction", {
-      numberLambda: parseInt(numberLambda, 10),
+    const response = await axios.post("https://530pk4th0c.execute-api.eu-central-1.amazonaws.com/factor", {
+      number: parseInt(numberLambda, 10),
     });
 
     setResultLambda(response.data.factors);
@@ -82,6 +82,8 @@ const handleHeavyComputationLambda = async () => {
     console.error("Error performing heavy computation:", error);
   }
 };
+
+
   return (
     <div className=" bg-blue-500 h-full ">
       <h1 className="text-2xl font-bold  text-center">
@@ -152,7 +154,7 @@ const handleHeavyComputationLambda = async () => {
       </div>
       <div className="mt-5 mb-5  flex items-center justify-center">
         <div className="bg-slate-300 p-8 w-10/12 rounded-md shadow-md">
-          Calculated on Server
+          Calculated on Server on EC2
           <label className="block mb-4 text-lg font-bold">
             Enter a Number:
           </label>
@@ -203,6 +205,8 @@ const handleHeavyComputationLambda = async () => {
           </button>
         </div>
       </div>
+
+     
     </div>
   );
 }

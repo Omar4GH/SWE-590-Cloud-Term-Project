@@ -1,5 +1,4 @@
-import { db } from "../db.js";
-import express from "express";
+
 import axios from "axios";
 
 export const getImage = async (req, res) => {
