@@ -13,8 +13,8 @@ RUN npm install
 # Copy the entire project to the working directory
 COPY . .
 
-# Expose port 3000
-EXPOSE 3000
+# Expose port 7000
+EXPOSE 7000
 
 # Command to run the application
 CMD ["npm", "start"]
