@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 let config = {
-  baseURL: "http://localhost:7000/api",
+  baseURL: "http://3.72.8.13:7000/api",
 };
 
 const _axios = axios.create(config);
