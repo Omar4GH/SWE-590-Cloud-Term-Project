@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 let config = {
-  baseURL: "http://3.72.8.13:7000/api",
+  baseURL: "http://172.31.22.15:7000/api",
 };
 
 const _axios = axios.create(config);
