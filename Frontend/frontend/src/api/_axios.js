@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 let config = {
-  baseURL: "http://172.31.22.15:7000/api",
+  baseURL: "http:/LoadBalSwe590-1661466505.eu-central-1.elb.amazonaws.com/api",
 };
 
 const _axios = axios.create(config);
